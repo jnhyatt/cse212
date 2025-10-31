@@ -1,8 +1,10 @@
-public static class Divisors {
+public static class Divisors
+{
     /// <summary>
     /// Entry point for the Divisors class
     /// </summary>
-    public static void Run() {
+    public static void Run()
+    {
         List<int> list = FindDivisors(80);
         Console.WriteLine("<List>{" + string.Join(", ", list) + "}"); // <List>{1, 2, 4, 5, 8, 10, 16, 20, 40}
         List<int> list1 = FindDivisors(79);
@@ -16,9 +18,11 @@ public static class Divisors {
     /// </summary>
     /// <param name="number">The number to find the divisor</param>
     /// <returns>List of divisors</returns>
-    private static List<int> FindDivisors(int number) {
-        List<int> results = new();
-        // TODO problem 1
-        return results;
-    }
+    private static List<int> FindDivisors(int number) => [.. Enumerable.Range(1, (int)Math.Sqrt(number))
+            // Divisors come in pairs, and the lower is less than sqrt(number)
+            .Where(i => number % i == 0)
+            // For square numbers, `Distinct` avoids adding the square root twice
+            .SelectMany(i => new[] { i, number / i }.Distinct())
+            // Not specified in the assignment, but looks nicer sorted
+            .Order()];
 }

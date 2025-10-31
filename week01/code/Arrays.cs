@@ -8,12 +8,10 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-
-        return []; // replace this return statement with your own
+        // We'll start with `[1, 2, 3, ..., length]` using `Enumerable.Range`
+        // Then we'll multiply each element by `number` using `Select` and a lambda function
+        // Voila!
+        return [.. Enumerable.Range(1, length).Select(i => number * i)];
     }
 
     /// <summary>
@@ -25,9 +23,16 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // To rotate a list, notice that we can split it in two and rearrange the halves.
+        // For the second half, we take the first `data.Count - amount` elements.
+        // For the first half, we take the last `amount` elements (skipping the first `data.Count - amount`).
+        // Finally, we combine the two parts in the correct order.
+        // Voila!
+
+        // Have to collect to list here or we invalidate the enumerator
+        var newData = data.Skip(data.Count - amount).Concat(data.Take(data.Count - amount)).ToList();
+        // Unfortunately since we're not returning a List and `data` isn't passed by ref, we have to clear and repopulate it
+        data.Clear();
+        data.AddRange(newData);
     }
 }
